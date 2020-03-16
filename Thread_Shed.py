@@ -111,10 +111,13 @@ green&white;,;09/15/17,   Gail Phelps   ;,;$30.52
 #------------------------------------------------
 # Start coding below!
 
+#cleaning up division artifacts
 daily_sales_replaced = daily_sales.replace(';,;',';')
 
+#splitting the sales data into individual transactions
 daily_transactions = daily_sales_replaced.split(',')
 
+#splitting the transactions into data points
 daily_transactions_split = []
 
 for sales in daily_transactions:
@@ -122,7 +125,7 @@ for sales in daily_transactions:
     daily_transactions_split.append(split_transactions_data)
 
 
-
+#removing white space
 transactions_clean =[]
 
 for sales in daily_transactions_split:
@@ -132,4 +135,56 @@ for sales in daily_transactions_split:
         stripped_sales.append(stripped_data)
     transactions_clean.append(stripped_sales)
 
-print(transactions_clean)
+#Creating Data categories
+customers = []
+sales = []
+thread_sold = []
+
+for sale in transactions_clean:
+    customers.append(sale[0])
+    sales.append(sale[1])
+    thread_sold.append(sale[2])
+
+#print(customers)
+#print(sales)
+#print(thread_sold)
+
+# Determining the total value of the days sales
+total_sales = 0
+
+for sale in sales:
+    sale_integer = sale.strip('$')
+    sale_float = float(sale_integer)
+    total_sales += sale_float
+
+#print(total_sales)
+
+#Determining how much thread of any specific color was sold
+thread_sold_split = []
+#Creating a list of the individual colours, splitting any multi-colours
+for thread in thread_sold:
+    if '&' not in thread:
+        thread_sold_split.append(thread)
+    else:
+        thread_split=thread.split('&')
+        for thread in thread_split:
+            thread_sold_split.append(thread)
+
+#define function that counts the times a colour appears in sales
+def colour_count(colour):
+    count = 0
+    for thread in thread_sold_split:
+        if thread == colour:
+            count+=1
+    return count
+
+#Test
+#print(colour_count('white'))
+
+#Colours availavle to be sold
+colours = ['red','yellow','green','white','black','blue','purple']
+
+for colour in colours:
+    number_sold = colour_count(colour)
+    statement = "Thread Shed sold {count} {colour} threads today.".format(count=number_sold,colour=colour)
+    print(statement)
