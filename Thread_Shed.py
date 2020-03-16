@@ -184,7 +184,13 @@ def colour_count(colour):
 #Colours availavle to be sold
 colours = ['red','yellow','green','white','black','blue','purple']
 
-for colour in colours:
-    number_sold = colour_count(colour)
-    statement = "Thread Shed sold {count} {colour} threads today.".format(count=number_sold,colour=colour)
-    print(statement)
+def how_many_sold(colours):
+    for colour in colours:
+        number_sold = colour_count(colour)
+        statement = "Thread Shed sold {count} {colour} threads today.".format(count=number_sold,colour=colour)
+        print(statement)
+
+
+print(customers)
+print("The toal amount made today was $"+str(total_sales))
+how_many_sold(colours)
